@@ -20,34 +20,50 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const { username, email, phone, dob } = formData;
-
-    if (!username || !email || !phone || !dob) {
+  
+    if (!username) {
       alert("Please fill all fields.");
       return;
     }
-
+  
+    if (!email) {
+      alert("Please fill all fields.");
+      return;
+    }
+  
     if (!email.includes('@')) {
       alert("Invalid email. Please check your email address.");
       return;
     }
-
+  
+    if (!phone) {
+      alert("Please fill all fields.");
+      return;
+    }
+  
     if (!/^\d{10}$/.test(phone)) {
       alert("Invalid phone number. Please enter a 10-digit phone number.");
       return;
     }
-
+  
+    if (!dob) {
+      alert("Please fill all fields.");
+      return;
+    }
+  
     const today = new Date();
     const dobDate = new Date(dob);
     if (dobDate > today) {
       alert("Invalid date of birth. Please enter a valid past date.");
       return;
     }
-
+  
     setFormData({ username: '', email: '', phone: '', dob: '' });
     setIsModalOpen(false);
   };
+  
 
   useEffect(() => {
     const handleClickOutside = (event) => {
