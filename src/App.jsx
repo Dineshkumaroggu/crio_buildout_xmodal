@@ -18,51 +18,44 @@ function App() {
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  
-    const { username, email, phone, dob } = formData;
-  
-    if (!username) {
-      alert("Please fill all fields.");
-      return;
-    }
-  
-    if (!email) {
-      alert("Please fill all fields.");
-      return;
-    }
-  
-    if (!email.includes('@')) {
-      alert("Invalid email. Please check your email address.");
-      return;
-    }
-  
-    if (!phone) {
-      alert("Please fill all fields.");
-      return;
-    }
-  
-    if (!/^\d{10}$/.test(phone)) {
-      alert("Invalid phone number. Please enter a 10-digit phone number.");
-      return;
-    }
-  
-    if (!dob) {
-      alert("Please fill all fields.");
-      return;
-    }
-  
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const { username, email, phone, dob } = formData;
+
+  // Email validation
+  if (email && !email.includes('@')) {
+    alert("Invalid email. Please check your email address.");
+    return;
+  }
+
+  // Phone number validation
+  if (phone && !/^\d{10}$/.test(phone)) {
+    alert("Invalid phone number. Please enter a 10-digit phone number.");
+    return;
+  }
+
+  // Date of birth validation
+  if (dob) {
     const today = new Date();
     const dobDate = new Date(dob);
     if (dobDate > today) {
       alert("Invalid date of birth. Please enter a valid past date.");
       return;
     }
-  
-    setFormData({ username: '', email: '', phone: '', dob: '' });
-    setIsModalOpen(false);
-  };
+  }
+
+  // General empty check
+  if (!username || !email || !phone || !dob) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  // Success
+  setFormData({ username: '', email: '', phone: '', dob: '' });
+  setIsModalOpen(false);
+};
+
   
 
   useEffect(() => {
@@ -78,7 +71,7 @@ function App() {
   return (
     <>
       <h1>User Details Modal</h1>
-      <button onClick={openModal} className="submit-button">Open Form</button>
+<button onClick={openModal}>Open Form</button>
 
       {isModalOpen && (
         <div className="modal">
